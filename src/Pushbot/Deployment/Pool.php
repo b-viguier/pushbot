@@ -8,7 +8,7 @@ class Pool extends \ArrayObject
 {
     public function offsetSet($index, $newval)
     {
-        if( ! is_subclass_of($newval, Deployment\Queue::class)) {
+        if( ! $newval instanceof Deployment\Queue) {
             throw new \Exception();
         }
         return parent::offsetSet($index, $newval);

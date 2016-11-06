@@ -8,7 +8,7 @@ class Queue extends \ArrayObject
 {
     public function offsetSet($index, $newval)
     {
-        if( ! $newval instanceof Deployment::class) {
+        if( ! $newval instanceof Deployment ) {
             throw new \Exception();
         }
         return parent::offsetSet($index, $newval);
