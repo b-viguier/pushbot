@@ -46,7 +46,8 @@ class Pushbot
         } catch(\Exception $e) {
             return new Response(
                 Response::SUCCESS,
-                'This is the general help'
+                'Available commands' . PHP_EOL
+                . implode(PHP_EOL, array_keys($this->commands))
             );
         }
     }
