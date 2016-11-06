@@ -1,0 +1,14 @@
+{
+    "name": "m6/pushbot",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Benoit Viguier",
+            "email": "bviguier.externe@m6.fr"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"M6\\": "src/"}
+    }
+}

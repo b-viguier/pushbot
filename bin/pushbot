@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+include __DIR__ . '/../vendor/autoload.php';
+
+$pushbot = new \M6\Pushbot\Pushbot();
+
+$response = $pushbot->execute(
+    array_shift($argv),
+    array_shift($argv),
+    $argv
+);
+
+echo $response->body . PHP_EOL;
+
+return $response->status == \M6\Pushbot\Response::SUCCESS ? 0 : 1;
