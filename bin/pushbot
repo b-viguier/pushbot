@@ -12,6 +12,7 @@ $pushbot = new Pushbot\Pushbot(
 
 $pushbot
     ->registerCommand(Command\Status::class)
+    ->registerCommand(Command\MEP::class)
     ;
 
 $response = $pushbot->execute(
