@@ -3,7 +3,16 @@
 
 include __DIR__ . '/../vendor/autoload.php';
 
-$pushbot = new \M6\Pushbot\Pushbot();
+use M6\Pushbot;
+use M6\Pushbot\Command;
+
+$pushbot = new Pushbot\Pushbot(
+    new Pushbot\Deployment\Pool()
+);
+
+$pushbot
+    ->registerCommand(Command\Status::class)
+    ;
 
 $response = $pushbot->execute(
     array_shift($argv),
