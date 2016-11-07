@@ -6,8 +6,12 @@ include __DIR__ . '/../vendor/autoload.php';
 use M6\Pushbot;
 use M6\Pushbot\Command;
 
+$pool = new Pushbot\Deployment\Pool();
+$persister = new Pushbot\Deployment\Pool\Persister\JsonFile(__DIR__ . '/../var/deployments_pool.json');
+
 $pushbot = new Pushbot\Pushbot(
-    new Pushbot\Deployment\Pool()
+    $pool,
+    $persister
 );
 
 $pushbot
@@ -15,6 +19,7 @@ $pushbot
     ->registerCommand(Command\MEP::class)
     ;
 
+array_shift($argv); //Pop function name
 $response = $pushbot->execute(
     array_shift($argv),
     array_shift($argv),

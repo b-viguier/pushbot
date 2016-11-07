@@ -11,9 +11,12 @@ class Pushbot
 
     private $pool;
 
-    public function __construct(Deployment\Pool $pool)
+    private $persister;
+
+    public function __construct(Deployment\Pool $pool, Deployment\Pool\PersisterInterface $persister)
     {
         $this->pool = $pool;
+        $this->persister = $persister;
     }
 
     public function registerCommand(string $className) : Pushbot
@@ -31,8 +34,12 @@ class Pushbot
     public function execute(string $user = null, string $commandName = null, array $args = []) : Response
     {
         try {
-            return $this->instanciateCommand($commandName)
+            $this->persister->load($this->pool);
+            $response = $this->instanciateCommand($commandName)
                 ->execute($this->pool, $user, $args);
+            $this->persister->save($this->pool);
+
+            return $response;
         } catch(\Exception $e) {
             return $this->help($commandName == 'help' ? reset($args) : null);
         }
