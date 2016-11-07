@@ -2,6 +2,7 @@
 
 namespace M6\Pushbot\Command;
 
+use M6\Pushbot\CommandInterface;
 use M6\Pushbot\Deployment;
 use M6\Pushbot\Response;
 

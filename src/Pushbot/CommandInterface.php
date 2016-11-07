@@ -1,8 +1,7 @@
 <?php
 
 
-namespace M6\Pushbot\Command;
-
+namespace M6\Pushbot;
 
 use M6\Pushbot\Deployment;
 use M6\Pushbot\Response;

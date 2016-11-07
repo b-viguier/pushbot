@@ -2,7 +2,7 @@
 
 namespace M6\Pushbot;
 
-use M6\Pushbot\Command\CommandInterface;
+use M6\Pushbot\CommandInterface;
 use M6\Pushbot\Deployment;
 
 class Pushbot

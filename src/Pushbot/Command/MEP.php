@@ -4,6 +4,7 @@ namespace M6\Pushbot\Command;
 
 use M6\Pushbot\Deployment;
 use M6\Pushbot\Response;
+use M6\Pushbot\CommandInterface;
 
 class MEP implements CommandInterface
 {
