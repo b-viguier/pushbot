@@ -6,7 +6,7 @@ use M6\Pushbot\Deployment;
 use M6\Pushbot\Response;
 use M6\Pushbot\CommandInterface;
 
-class MEP implements CommandInterface
+class Mep implements CommandInterface
 {
     public function execute(Deployment\Pool $pool, string $user, array $args) : Response
     {

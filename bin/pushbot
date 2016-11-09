@@ -16,7 +16,7 @@ $pushbot = new Pushbot\Pushbot(
 
 $pushbot
     ->registerCommand(Command\Status::class)
-    ->registerCommand(Command\MEP::class)
+    ->registerCommand(Command\Mep::class)
     ;
 
 array_shift($argv); //Pop function name
