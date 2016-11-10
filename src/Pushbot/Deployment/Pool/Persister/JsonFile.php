@@ -19,9 +19,9 @@ class JsonFile implements PersisterInterface
     public function load(Pool $pool)
     {
         $data = json_decode(
-            file_get_contents($this->filename),
+            @file_get_contents($this->filename),
             true
-        );
+        ) ?? [];
         foreach($data as $project => $queue) {
             $pool[$project] = new Queue;
             foreach($queue as $deployment) {
