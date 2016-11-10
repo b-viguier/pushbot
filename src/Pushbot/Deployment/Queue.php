@@ -13,4 +13,14 @@ class Queue extends \ArrayObject
         }
         return parent::offsetSet($index, $newval);
     }
+
+    public function getFirst()
+    {
+        return $this->getIterator()->current();
+    }
+
+    public function removeFirst()
+    {
+        $this->offsetUnset($this->getIterator()->key());
+    }
 }

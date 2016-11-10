@@ -19,12 +19,24 @@ class Mep implements CommandInterface
         }
 
         $queue = $pool[$projectName] ?? $pool[$projectName] = new Deployment\Queue();
+
+        foreach($queue as $deployment) {
+            if($deployment->user == $user) {
+                return new Response(
+                    Response::FAILURE,
+                    'You already have a waiting deployment'
+                );
+            }
+        }
+
+        $response = new Response(Response::SUCCESS, 'Done');
+
+        if($count = count($queue)) {
+            $response->body = "There is $count jobs before you… I'll notify you when it's your turn!";
+        }
         $queue[] = new Deployment($user);
 
-        return new Response(
-            Response::SUCCESS,
-            'Done'
-        );
+        return $response;
     }
 
     public function help() : Response
