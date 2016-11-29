@@ -61,6 +61,8 @@ class Pushbot
 
     private function instanciateCommand(string $commandName = null) : CommandInterface
     {
+        $commandName = $commandName ? strtolower($commandName) : $commandName;
+
         if( !isset($this->commands[$commandName]) ) {
             throw new \Exception('unknown command');
         }
