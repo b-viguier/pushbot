@@ -10,5 +10,8 @@
     "require": {},
     "autoload": {
         "psr-4": {"M6\\": "src/"}
+    },
+    "require-dev": {
+        "behat/behat": "^3.2"
     }
 }
