@@ -41,7 +41,10 @@ class Pushbot
 
             return $response;
         } catch(\Exception $e) {
-            return $this->help($commandName == 'help' ? reset($args) : null);
+            $response = $this->help($commandName == 'help' ? reset($args) : null);
+            $response->status = Response::FAILURE;
+
+            return $response;
         }
     }
 
