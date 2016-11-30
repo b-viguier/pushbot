@@ -14,7 +14,7 @@ class Queue extends \ArrayObject
         return parent::offsetSet($index, $newval);
     }
 
-    public function getFirst()
+    public function getFirst() : Deployment
     {
         return $this->getIterator()->current();
     }
@@ -22,5 +22,20 @@ class Queue extends \ArrayObject
     public function removeFirst()
     {
         $this->offsetUnset($this->getIterator()->key());
+    }
+
+    public function add(Deployment $deployment)
+    {
+        $this[$deployment->user] = $deployment;
+    }
+
+    public function getByUser(string $user)
+    {
+        return $this[$user] ?? null;
+    }
+
+    public function removeByUser(string $user)
+    {
+        unset($this[$user]);
     }
 }

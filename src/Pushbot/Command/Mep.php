@@ -20,13 +20,11 @@ class Mep implements CommandInterface
 
         $queue = $pool[$projectName] ?? $pool[$projectName] = new Deployment\Queue();
 
-        foreach($queue as $deployment) {
-            if($deployment->user == $user) {
-                return new Response(
-                    Response::FAILURE,
-                    'You already have a waiting deployment'
-                );
-            }
+        if ($queue->getByUser($user)) {
+            return new Response(
+                Response::FAILURE,
+                'You already have a waiting deployment'
+            );
         }
 
         $response = new Response(Response::SUCCESS, 'Done');
@@ -34,7 +32,7 @@ class Mep implements CommandInterface
         if($count = count($queue)) {
             $response->body = "There is $count jobs before you… I'll notify you when it's your turn!";
         }
-        $queue[] = new Deployment($user);
+        $queue->add(new Deployment($user));
 
         return $response;
     }

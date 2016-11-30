@@ -16,7 +16,7 @@ class PhpArray implements PersisterInterface
         foreach($this->data as $project => $queue) {
             $pool[$project] = new Queue;
             foreach($queue as $deployment) {
-                $pool[$project][] = new Deployment($deployment['user']);
+                $pool[$project]->add(new Deployment($deployment['user']));
             }
         }
     }

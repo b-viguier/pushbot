@@ -49,9 +49,9 @@ class FeatureContext implements Context
     }
 
     /**
-     * @When user :user requires to :action project :project
+     * @When user :user :state to :action project :project
      */
-    public function userRequiresToDoSomethingOnProject(string $user, string $action, string $project)
+    public function userRequiresToDoSomethingOnProject(string $user, string $state, string $action, string $project)
     {
         $response = $this->pushbot->execute(
             $user,
@@ -59,10 +59,25 @@ class FeatureContext implements Context
             [$project]
         );
 
-        if($response->status == Pushbot\Response::FAILURE) {
-            throw new \ErrorException(
-                sprintf('An error occurred [%s]', $response->body)
-            );
+        switch($state) {
+            case 'succeeds' :
+                if( $response->status != Pushbot\Response::SUCCESS) {
+                    throw new \ErrorException(
+                        sprintf('Command failed [%s]', $response->body)
+                    );
+                }
+                break;
+            case 'fails':
+                if( $response->status != Pushbot\Response::FAILURE) {
+                    throw new \ErrorException(
+                        sprintf('Command succeeded [%s]', $response->body)
+                    );
+                }
+                break;
+            default:
+                throw new \ErrorException(
+                    sprintf('Unexpected state [%s] (expecting "fails" or "succeds")', $state)
+                );
         }
     }
 

@@ -18,6 +18,7 @@ $pushbot
     ->registerCommand(Command\Status::class)
     ->registerCommand(Command\Mep::class)
     ->registerCommand(Command\Done::class)
+    ->registerCommand(Command\Cancel::class)
     ;
 
 array_shift($argv); //Pop function name
