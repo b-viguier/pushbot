@@ -8,22 +8,13 @@ use M6\Pushbot\CommandInterface;
 
 class Cancel implements CommandInterface
 {
+    use Helper\ProjectCommand;
+
     public function execute(Deployment\Pool $pool, string $user, array $args) : Response
     {
-        $projectName = reset($args);
-        if(!$projectName) {
-            $response = $this->help();
-            $response->status = Response::FAILURE;
+        $projectName = $this->extractProjectName($args);
 
-            return $response;
-        }
-
-        if(!isset($pool[$projectName])) {
-            return new Response(
-                Response::FAILURE,
-                'No job for this project'
-            );
-        }
+        $this->projectMustExist($projectName, $pool);
 
         $queue = $pool[$projectName];
         $deployment = $queue->getByUser($user);

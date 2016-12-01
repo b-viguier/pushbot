@@ -8,15 +8,11 @@ use M6\Pushbot\CommandInterface;
 
 class Mep implements CommandInterface
 {
+    use Helper\ProjectCommand;
+
     public function execute(Deployment\Pool $pool, string $user, array $args) : Response
     {
-        $projectName = reset($args);
-        if(!$projectName) {
-            $response = $this->help();
-            $response->status = Response::FAILURE;
-
-            return $response;
-        }
+        $projectName = $this->extractProjectName($args);
 
         $queue = $pool[$projectName] ?? $pool[$projectName] = new Deployment\Queue();
 

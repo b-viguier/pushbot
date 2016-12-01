@@ -4,6 +4,7 @@ namespace M6\Pushbot;
 
 use M6\Pushbot\CommandInterface;
 use M6\Pushbot\Deployment;
+use M6\Pushbot\Exception\ResponseException;
 
 class Pushbot
 {
@@ -40,6 +41,8 @@ class Pushbot
             $this->persister->save($this->pool);
 
             return $response;
+        } catch(ResponseException $e) {
+            return $e->getResponse();
         } catch(\Exception $e) {
             $response = $this->help($commandName == 'help' ? reset($args) : null);
             $response->status = Response::FAILURE;
