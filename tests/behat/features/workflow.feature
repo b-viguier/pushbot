@@ -6,7 +6,7 @@ Feature: Basic workflow
     When user A succeeds to MEP project 1
     And user A succeeds to MEP project 2
     And user A fails to MEP project 2
-    And user B succeeds to MEP project 1
+    And user B fails to MEP project 1
     And user B succeeds to MEP project 3
     Then the global status should be:
       | project  | users |
@@ -25,6 +25,6 @@ Feature: Basic workflow
 
   Scenario: pushbot tells users that they can MEP
     Given user Alice is deploying project 1
-    When user Bob succeeds to MEP project 1
+    When user Bob fails to MEP project 1
     And user Alice succeeds to DONE project 1
     Then last output must contains Bob

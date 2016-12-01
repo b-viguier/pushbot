@@ -30,7 +30,10 @@ class Mep implements CommandInterface
         $response = new Response(Response::SUCCESS, 'Done');
 
         if($count = count($queue)) {
-            $response->body = "There is $count jobs before you… I'll notify you when it's your turn!";
+            $response = new Response(
+                Response::FAILURE,
+                "There is $count jobs before you… I'll notify you when it's your turn!"
+            );
         }
         $queue->add(new Deployment($user));
 
