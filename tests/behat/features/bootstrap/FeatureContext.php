@@ -18,6 +18,8 @@ class FeatureContext implements Context
 
     private $persister;
 
+    private $last_response;
+
     /**
      * Initializes context.
      *
@@ -49,11 +51,22 @@ class FeatureContext implements Context
     }
 
     /**
+     * @Given user :user is deploying project :project
+     */
+    public function userIsDeployingProject($user, $project)
+    {
+        $this->persister->data[$project] = $this->persister->data[$project] ?? [];
+        $this->persister->data[$project][] = [
+            'user' => $user,
+        ];
+    }
+
+    /**
      * @When user :user :state to :action project :project
      */
     public function userRequiresToDoSomethingOnProject(string $user, string $state, string $action, string $project)
     {
-        $response = $this->pushbot->execute(
+        $this->last_response = $this->pushbot->execute(
             $user,
             $action,
             [$project]
@@ -61,16 +74,16 @@ class FeatureContext implements Context
 
         switch($state) {
             case 'succeeds' :
-                if( $response->status != Pushbot\Response::SUCCESS) {
+                if( $this->last_response->status != Pushbot\Response::SUCCESS) {
                     throw new \ErrorException(
-                        sprintf('Command failed [%s]', $response->body)
+                        sprintf('Command failed [%s]', $this->last_response->body)
                     );
                 }
                 break;
             case 'fails':
-                if( $response->status != Pushbot\Response::FAILURE) {
+                if( $this->last_response->status != Pushbot\Response::FAILURE) {
                     throw new \ErrorException(
-                        sprintf('Command succeeded [%s]', $response->body)
+                        sprintf('Command succeeded [%s]', $this->last_response->body)
                     );
                 }
                 break;
@@ -96,6 +109,18 @@ class FeatureContext implements Context
             if ($users !== array_column($project_deployments, 'user')) {
                 throw new ErrorException(sprintf('Unexpected users [%s] for project [%s]', implode(',', $project_deployments), $row['project']));
             }
+        }
+    }
+
+    /**
+     * @Then last output must contains :word
+     */
+    public function lastOutputMustContainsAlice($word)
+    {
+        if (false === strpos($this->last_response->body, $word)) {
+            throw new ErrorException(
+                sprintf('Output [%s] does not contains [%s]', $this->last_response->body, $word)
+            );
         }
     }
 }

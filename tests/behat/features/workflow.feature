@@ -22,3 +22,9 @@ Feature: Basic workflow
     And user B fails to DONE project 1
     Then the global status should be:
       | project  | users |
+
+  Scenario: pushbot tells users that they can MEP
+    Given user Alice is deploying project 1
+    When user Bob succeeds to MEP project 1
+    And user Alice succeeds to DONE project 1
+    Then last output must contains Bob
