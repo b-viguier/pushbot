@@ -12,12 +12,16 @@ class Status implements CommandInterface
     {
         $response = new Response(Response::SUCCESS);
 
-        $response->body .= "Status" . PHP_EOL;
-        foreach ($pool as $project => $deployments) {
-            $response->body .= "[$project]" . PHP_EOL;
-            $order = 0;
-            foreach ($deployments as $deployment) {
-                $response->body .= sprintf('[%d] %s', ++$order, $deployment->user) . PHP_EOL;
+        if(count($pool) == 0 ) {
+            $response->body = 'Nothing to show…';
+        } else {
+            $response->body .= "Status" . PHP_EOL;
+            foreach ($pool as $project => $deployments) {
+                $response->body .= sprintf(
+                    "[%s] %s",
+                    $project,
+                    implode(',', array_column($deployments->getArrayCopy(), 'user'))
+                );
             }
         }
 

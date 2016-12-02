@@ -40,3 +40,25 @@ Feature: Basic workflow
     And the global status should be:
       | project  | users |
       | 1 | Charly |
+
+  Scenario: global empty status
+    Given nobody is deploying
+    When user A succeeds to STATUS
+    Then last output must contains Nothing
+
+  Scenario: global status with 1 project
+    Given user Alice is deploying project P1
+    And user Bob is deploying project P1
+    When user A succeeds to STATUS
+    Then last output must contains P1
+    And last output must contains Alice
+    And last output must contains Bob
+
+  Scenario: global status with several projects
+    Given user Alice is deploying project P1
+    And user Bob is deploying project P2
+    When user A succeeds to STATUS
+    Then last output must contains P1
+    And last output must contains Alice
+    And last output must contains P1
+    And last output must contains Bob

@@ -62,14 +62,22 @@ class FeatureContext implements Context
     }
 
     /**
+     * @When user :user :state to :action
+     */
+    public function userRequiresToDoSomething(string $user, string $state, string $action)
+    {
+        return $this->userRequiresToDoSomethingOnProject($user, $state, $action);
+    }
+
+    /**
      * @When user :user :state to :action project :project
      */
-    public function userRequiresToDoSomethingOnProject(string $user, string $state, string $action, string $project)
+    public function userRequiresToDoSomethingOnProject(string $user, string $state, string $action, string $project = null)
     {
         $this->last_response = $this->pushbot->execute(
             $user,
             $action,
-            [$project]
+            $project ? [$project] : []
         );
 
         switch($state) {
