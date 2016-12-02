@@ -7,7 +7,9 @@
             "email": "bviguier.externe@m6.fr"
         }
     ],
-    "require": {},
+    "require": {
+        "php" : ">=7"
+    },
     "autoload": {
         "psr-4": {"M6\\": "src/"}
     },
