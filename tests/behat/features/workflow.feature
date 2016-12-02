@@ -46,10 +46,23 @@ Feature: Basic workflow
     When user A succeeds to STATUS
     Then last output must contains Nothing
 
+  Scenario: local empty status
+    Given nobody is deploying
+    When user A succeeds to STATUS project 1
+    Then last output must contains Nothing
+
   Scenario: global status with 1 project
     Given user Alice is deploying project P1
     And user Bob is deploying project P1
     When user A succeeds to STATUS
+    Then last output must contains P1
+    And last output must contains Alice
+    And last output must contains Bob
+
+  Scenario: local status with 1 project
+    Given user Alice is deploying project P1
+    And user Bob is deploying project P1
+    When user A succeeds to STATUS project P1
     Then last output must contains P1
     And last output must contains Alice
     And last output must contains Bob
@@ -60,5 +73,14 @@ Feature: Basic workflow
     When user A succeeds to STATUS
     Then last output must contains P1
     And last output must contains Alice
-    And last output must contains P1
+    And last output must contains P2
     And last output must contains Bob
+
+  Scenario: local status with several projects
+    Given user Alice is deploying project P1
+    And user Bob is deploying project P2
+    When user A succeeds to STATUS project P1
+    Then last output must contains P1
+    And last output must contains Alice
+    And last output "must not" contains P2
+    And last output "must not" contains Bob

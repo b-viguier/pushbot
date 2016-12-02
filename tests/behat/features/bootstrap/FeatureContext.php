@@ -12,7 +12,7 @@ use M6\Pushbot\Command;
  */
 class FeatureContext implements Context
 {
-    const ROOT_DIR = __DIR__ . '/../../../..';
+    const ROOT_DIR = __DIR__.'/../../../..';
 
     private $pushbot;
 
@@ -38,8 +38,7 @@ class FeatureContext implements Context
             ->registerCommand(Command\Status::class)
             ->registerCommand(Command\Mep::class)
             ->registerCommand(Command\Done::class)
-            ->registerCommand(Command\Cancel::class)
-        ;
+            ->registerCommand(Command\Cancel::class);
     }
 
     /**
@@ -80,16 +79,16 @@ class FeatureContext implements Context
             $project ? [$project] : []
         );
 
-        switch($state) {
+        switch ($state) {
             case 'succeeds' :
-                if( $this->last_response->status != Pushbot\Response::SUCCESS) {
+                if ($this->last_response->status != Pushbot\Response::SUCCESS) {
                     throw new \ErrorException(
                         sprintf('Command failed [%s]', $this->last_response->body)
                     );
                 }
                 break;
             case 'fails':
-                if( $this->last_response->status != Pushbot\Response::FAILURE) {
+                if ($this->last_response->status != Pushbot\Response::FAILURE) {
                     throw new \ErrorException(
                         sprintf('Command succeeded [%s]', $this->last_response->body)
                     );
@@ -121,13 +120,19 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Then last output must contains :word
+     * @Then last output :verb contains :word
      */
-    public function lastOutputMustContainsAlice($word)
+    public function lastOutputMustContainsAlice(string $verb, string $word)
     {
-        if (false === strpos($this->last_response->body, $word)) {
+        $must_not_be_present = $verb == 'must not';
+        if ($must_not_be_present !== (false === strpos($this->last_response->body, $word))) {
             throw new ErrorException(
-                sprintf('Output [%s] does not contains [%s]', $this->last_response->body, $word)
+                sprintf(
+                    'Output [%s] %s [%s]',
+                    $this->last_response->body,
+                    $must_not_be_present ? 'contains' : "does'nt contain",
+                    $word
+                )
             );
         }
     }
