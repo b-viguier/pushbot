@@ -4,8 +4,8 @@ namespace M6\Pushbot;
 
 class Response
 {
-    const SUCCESS = 'success';
-    const FAILURE = 'failure';
+    const SUCCESS = 200;
+    const FAILURE = 400;
 
     public $status;
     public $body;
