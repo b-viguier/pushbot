@@ -35,7 +35,7 @@ class Cancel implements CommandInterface
         if (0 == count($queue)) {
             unset($pool[$projectName]);
         } elseif ($isFirst) {
-            $response->body .= "\n Hey {$queue->getFirst()->user} ! It's your turn :)";
+            $response->body .= "\n Hey @{$queue->getFirst()->user} ! It's your turn :)";
         }
 
         return $response;

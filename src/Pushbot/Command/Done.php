@@ -31,7 +31,7 @@ class Done implements CommandInterface
         );
 
         if(count($queue)) {
-            $response->body .= "\n Hey {$queue->getFirst()->user} ! It's your turn :)";
+            $response->body .= "\n Hey @{$queue->getFirst()->user} ! It's your turn :)";
         } else {
             unset($pool[$projectName]);
         }
