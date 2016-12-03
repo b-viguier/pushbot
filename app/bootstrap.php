@@ -6,7 +6,7 @@ use M6\Pushbot;
 use M6\Pushbot\Command;
 
 $pool = new Pushbot\Deployment\Pool();
-$persister = new Pushbot\Deployment\Pool\Persister\JsonFile(__DIR__.'/../var/deployments_pool.json');
+$persister = new Pushbot\Deployment\Pool\Persister\Redis('tcp://localhost:6379', 'pushbot');
 
 $pushbot = new Pushbot\Pushbot(
     $pool,
