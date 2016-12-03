@@ -1,25 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-include __DIR__ . '/../vendor/autoload.php';
-
-use M6\Pushbot;
-use M6\Pushbot\Command;
-
-$pool = new Pushbot\Deployment\Pool();
-$persister = new Pushbot\Deployment\Pool\Persister\JsonFile(__DIR__ . '/../var/deployments_pool.json');
-
-$pushbot = new Pushbot\Pushbot(
-    $pool,
-    $persister
-);
-
-$pushbot
-    ->registerCommand(Command\Status::class)
-    ->registerCommand(Command\Mep::class)
-    ->registerCommand(Command\Done::class)
-    ->registerCommand(Command\Cancel::class)
-    ;
+/** @var \M6\Pushbot\Pushbot $pushbot */
+$pushbot = include __DIR__.'/../app/bootstrap.php';
 
 array_shift($argv); //Pop function name
 $response = $pushbot->execute(
@@ -28,6 +11,6 @@ $response = $pushbot->execute(
     $argv
 );
 
-echo $response->body . PHP_EOL;
+echo $response->body.PHP_EOL;
 
 return $response->status == \M6\Pushbot\Response::SUCCESS ? 0 : 1;
