@@ -5,8 +5,10 @@ include __DIR__.'/../vendor/autoload.php';
 use M6\Pushbot;
 use M6\Pushbot\Command;
 
+$config = include __DIR__.'/config/config.php';
+
 $pool = new Pushbot\Deployment\Pool();
-$persister = new Pushbot\Deployment\Pool\Persister\Redis('tcp://localhost:6379', 'pushbot');
+$persister = $config['persister'] ?? new Pushbot\Deployment\Pool\Persister\PhpArray();
 
 $pushbot = new Pushbot\Pushbot(
     $pool,
