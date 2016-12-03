@@ -25,14 +25,12 @@ $response = $pushbot->execute(
 
 header('Content-Type: application/json; charset=UTF-8');
 
-?>
-
-{
-"color": "<?= $response->status == \M6\Pushbot\Response::SUCCESS ? 'green' : 'red' ?>",
-"message": "<p><?= str_replace(PHP_EOL, '<br/>', $response->body) ?></p>",
-"notify": true,
-"message_format": "html"
-}
-
-
-
+echo json_encode(
+    [
+        'color' => $response->status == \M6\Pushbot\Response::SUCCESS ? 'green' : 'red',
+        'message' => $response->body,
+        'notify' => true,
+        'message_format' => 'text',
+        'attach_to' => $payload->item->message->id ?? null,
+    ]
+);
