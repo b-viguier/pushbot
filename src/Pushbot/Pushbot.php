@@ -23,7 +23,7 @@ class Pushbot
     public function registerCommand(string $className) : Pushbot
     {
         if (!is_subclass_of($className, CommandInterface::class)) {
-            throw new \Exception("Class '$className' does not implements " . CommandInterface::class);
+            throw new \Exception("Class '$className' does not implements ".CommandInterface::class);
         }
 
         $classPath = explode('\\', $className);
@@ -41,9 +41,9 @@ class Pushbot
             $this->persister->save($this->pool);
 
             return $response;
-        } catch(ResponseException $e) {
+        } catch (ResponseException $e) {
             return $e->getResponse();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $response = $this->help($commandName == 'help' ? reset($args) : null);
             $response->status = Response::FAILURE;
 
@@ -56,11 +56,19 @@ class Pushbot
         try {
             return $this->instanciateCommand($commandName)
                 ->help();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return new Response(
                 Response::SUCCESS,
-                'Available commands' . PHP_EOL
-                . implode(PHP_EOL, array_keys($this->commands))
+                'Available commands:'.PHP_EOL
+                .implode(
+                    PHP_EOL,
+                    array_map(
+                        function (string $commandName) {
+                            return '  '.$this->instanciateCommand($commandName)->help()->body;
+                        },
+                        array_keys($this->commands)
+                    )
+                )
             );
         }
     }
@@ -69,7 +77,7 @@ class Pushbot
     {
         $commandName = $commandName ? strtolower($commandName) : $commandName;
 
-        if( !isset($this->commands[$commandName]) ) {
+        if (!isset($this->commands[$commandName])) {
             throw new \Exception('unknown command');
         }
 

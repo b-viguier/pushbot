@@ -29,7 +29,7 @@ class Status implements CommandInterface
             $response->body = 'Nothing to show…';
         } else {
             foreach ($projects as $project) {
-                $response->body .= $this->projectStatus($project, $pool[$project]) . PHP_EOL;
+                $response->body .= $this->projectStatus($project, $pool[$project]).PHP_EOL;
             }
         }
 
@@ -40,7 +40,7 @@ class Status implements CommandInterface
     {
         return new Response(
             Response::SUCCESS,
-            'This is the status command'
+            'status (<project>)'
         );
     }
 
