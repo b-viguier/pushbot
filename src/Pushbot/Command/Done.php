@@ -27,7 +27,7 @@ class Done implements CommandInterface
         $queue->removeFirst();
         $response = new Response(
             Response::SUCCESS,
-            'Done'
+            "(successful) Done for $projectName"
         );
 
         if(count($queue)) {
