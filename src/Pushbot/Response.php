@@ -18,6 +18,6 @@ class Response
 
     public function __get($name)
     {
-        throw new \Exception("Unknown attribute '$name");
+        throw new \Exception("Unknown attribute '$name'");
     }
 }
