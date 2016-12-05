@@ -8,13 +8,13 @@ Pushbot est un (très) petit bot Hipchat pour superviser les déploiements.
 La commande `/pushbot` vous lister la liste des commandes qu'il supporte.
 
 ### Mise En Production
-`/pushbot MEP service-6play-middleware`
+`/pushbot MEP my-project`
 
 ### Terminer une MEP
-`/pushbot done service-6play-middleware`
+`/pushbot done my-project`
 
 ### Annuler une MEP
-`/pushbot cancel service-6play-middleware`
+`/pushbot cancel my-project`
 
 ### Demander l'état des MEP
 `/pushbot status`
@@ -53,7 +53,6 @@ Parce que c'était plus intéressant de faire sans :smile:. Mais ça peut change
 * [ ] Un dictionnaire de *synonyme* pour les noms de projets.
 * [ ] Une commande `kick` pour annuler enlever quelqu'un d'autre d'une file d'attente.
 * [ ] Améliorer la persistence des données pour éviter les *race conditions* et permettre un usage *multi room*
-* [ ] Créer une configuration dans le `deployer` avec un vrai nom de domaine fourni par BCS.
 * [ ] Plus de tests…
 * [ ] Améliorer le *graphisme* des réponses
 * [ ] …
